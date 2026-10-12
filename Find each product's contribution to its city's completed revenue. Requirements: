@@ -1,0 +1,24 @@
+Scenario: Find each product's contribution to its city's completed revenue.
+Requirements:
+- Display City, Product, Product_Revenue, and City_Revenue_Percentage.
+- Include completed orders only.
+- Calculate total revenue for each city and product combination.
+- Calculate each product's percentage of its city's total revenue.
+- Use a window function or CTE.
+- Round the percentage to 2 decimal places.
+Hint: First aggregate revenue by City and Product. 
+Then use SUM(Product_Revenue) OVER (PARTITION BY City) to calculate each city's total.
+
+Answer Query :
+
+with Revenues as (
+select City , Product , Sum(Revenue) as Product_Revenue
+from Sales_data where Order_Status = 'Completed'
+group by City , Product) ,
+
+Product_value as(
+select City , Product , Product_Revenue , sum(Product_Revenue) over(partition by City) as City_Revenue from Revenues)
+
+select City , Product , Product_Revenue , round((City_Revenue / Product_Revenue) * 100,2) as City_Revenue_Percentage
+from Product_value
+order by City , City_Revenue_Percentage desc;
