@@ -1,0 +1,18 @@
+-- Scenario: Find each city's percentage of completed orders.
+-- Requirements:
+-- - Display City, Completed_Order_Count, and Order_Percentage.
+-- - Count completed orders per city.
+-- - Calculate each city's share of all completed orders.
+-- - Use a CTE or subquery.
+-- - Round the percentage to 2 decimal places.
+
+Answer Query :-
+with City_order as(
+select City , count(Order_ID) as Completed_Order_Count from Sales_data
+where Order_Status = 'Completed'
+Group by City ) 
+
+select City , Completed_Order_Count , 
+round((Completed_Order_Count)* 100 / (select Count(*) from Sales_data
+where Order_Status = 'Completed'),2) as Order_Percentage 
+from City_order; 	
