@@ -1,0 +1,23 @@
+-- Find each city's highest-revenue product.
+-- Requirements:
+-- - Include completed orders only.
+-- - Calculate total revenue for each City and Product.
+-- - Display City, Product, and Total_Revenue.
+-- - Return the highest-revenue product in each city.
+-- - If products tie, return all tied products.
+-- - Use a CTE with RANK() or DENSE_RANK().'
+
+
+Answer Query :
+
+with City_Revenue as 
+(select City , Product , sum(Revenue)  as Total_Revenue 
+from Sales_data where Order_Status = 'Completed'
+group by City , Product),
+
+Highest_Revenue_product as(
+select City , Product , Total_Revenue , dense_rank() over(partition by City order by Total_Revenue desc) as Highest_Rank 
+from City_Revenue  )
+
+select City , Product , Total_Revenue , Highest_Rank from Highest_Revenue_product
+where Highest_Rank = 1;
