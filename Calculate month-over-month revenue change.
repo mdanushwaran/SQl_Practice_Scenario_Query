@@ -1,0 +1,32 @@
+-- Scenario: Calculate month-over-month revenue change.
+-- Using completed orders, calculate the difference between each month's revenue and the previous month's revenue.
+-- Requirements:
+-- - Display Month_Num, Total_Revenue, and Revenue_Change.
+-- - Use a CTE to calculate monthly revenue.
+-- - Use LAG() to get the previous month's revenue.
+-- - Calculate Revenue_Change = Current Month Revenue − Previous Month Revenue.
+-- - Sort by month ascending.
+
+Answer Query :
+
+with Month_Revenue as (
+select month(Order_Date) as Month_Num ,
+sum(Revenue) as Total_Revenue from Sales_data
+where Order_Status = 'Completed'
+group by Month_Num) ,
+
+Pervious_month as (
+select Month_Num , Total_Revenue , lag(Total_Revenue) over(order by Month_Num) as Pervious_Revenue
+from Month_Revenue),
+
+Revenue_Stable as(
+select Month_Num , Total_Revenue , Pervious_Revenue , case 
+when Total_Revenue >= Pervious_Revenue then 'Revenue_increased'
+else 'Revenue decreased'
+end as Revenue_Stand 
+from Pervious_Month)
+
+select Month_Num , Total_Revenue ,Pervious_Revenue, Total_Revenue - Pervious_Revenue as Revenue_Change , Revenue_Stand
+from Revenue_Stable
+order by Month_Num;
+
