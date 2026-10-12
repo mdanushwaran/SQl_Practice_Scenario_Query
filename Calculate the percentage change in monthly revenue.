@@ -1,0 +1,26 @@
+-- Scenario: Calculate the percentage change in monthly revenue.
+-- Using completed orders, calculate each month's revenue percentage change compared with the previous month.
+-- Requirements:
+-- - Display Month_Num, Total_Revenue, and Revenue_Change_Percentage.
+-- - Use a CTE to calculate monthly revenue.
+-- - Use LAG() to retrieve the previous month's revenue.
+-- - Formula: (Current Revenue - Previous Revenue) / Previous Revenue × 100.
+-- - Round to 2 decimal places.
+
+
+Answer Query :
+
+with Month_Number as(
+select month(Order_Date) as Month_Num ,
+sum(Revenue) as Total_Revenue from Sales_data
+where Order_Status ='Completed'
+group by Month_Num),
+
+pervious_value as(
+select Month_Num , Total_Revenue , lag(Total_Revenue) over(order by Month_Num) as Pervious_Revenue
+from Month_Number)
+
+select Month_Num , Total_Revenue , round((Total_Revenue - Pervious_Revenue) / Pervious_Revenue * 100,2) as Revenue_Percentage
+from pervious_value 
+order by Month_Num;
+
