@@ -1,0 +1,16 @@
+-- Scenario: Find cities where the average completed-order revenue is greater than the overall average completed-order revenue.
+-- Requirements:
+-- - Calculate each city's average completed-order revenue.
+-- - Compare it with the average revenue of all completed orders.
+-- - Display City and Average_Revenue.
+-- - Return only cities above the overall average.
+-- - Round the average to two decimal places.
+-- Hint: Use GROUP BY, HAVING, and a subquery with AVG().
+
+Answer Query 
+
+
+select City , round(avg(Revenue),2) as Avg_Revenue from Sales_data
+where Order_Status = 'Completed'
+group by City 
+having Avg_Revenue > ( select avg(Revenue) from Sales_data where Order_Status = 'Completed');
