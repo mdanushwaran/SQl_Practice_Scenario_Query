@@ -10,3 +10,4 @@ To Practice the SQl_Practice_Scenario_Query for this Respository
 7) Find products whose completed revenue is greater than the average completed revenue per product.
 8) Find each city's top 2 products by completed revenue.
 9)  Find completed orders whose revenue is greater than the previous completed order's revenue in the same city
+10)  Find each product's percentage contribution to total completed revenue.
