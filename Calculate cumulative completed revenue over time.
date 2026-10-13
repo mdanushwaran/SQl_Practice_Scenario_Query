@@ -1,0 +1,24 @@
+Scenario: Calculate cumulative completed revenue over time.
+Using the Sales_data table:
+- Display Order_ID, Order_Date, Revenue, and Running_Revenue.
+- Include only completed orders.
+- Calculate cumulative revenue using the SUM() window function.
+- Show the results in ascending order of Order_Date.
+
+Answer Query :
+select Order_ID , Order_Date , Revenue , sum(Revenue) over(order by Order_Date) as Running_Revenue 
+from Sales_data where Order_Status = 'Completed';
+
+        Or
+
+SELECT
+    Order_ID,
+    Order_Date,
+    Revenue,
+    SUM(Revenue) OVER (
+        ORDER BY Order_Date
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS Running_Revenue
+FROM Sales_data
+WHERE Order_Status = 'Completed'
+ORDER BY Order_Date ASC;
