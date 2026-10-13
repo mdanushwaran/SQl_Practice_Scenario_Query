@@ -1,0 +1,24 @@
+Scenario: Find each product's percentage contribution to total completed revenue.
+Requirements:
+- Calculate completed revenue for each product.
+- Display Product, Total_Revenue, and Revenue_Percentage.
+- Calculate each product's percentage of all completed revenue.
+- Round the percentage to 2 decimal places.
+- Sort by percentage descending.
+Hint: Use a CTE, SUM(), and a scalar subquery or window function.
+
+Answer Query :
+
+with product_Revenue as(
+select Product , sum(Revenue) as Total_Revenue from Sales_data
+where Order_Status = 'Completed' group by Product),
+
+Revenue_Value as(
+select Product , Total_Revenue , round((Total_Revenue * 100) / (select sum(Revenue) from Sales_data 
+where Order_Status = 'Completed'), 2) as Revenue_Percentage 
+from Product_Revenue )
+
+select Product , Total_Revenue , Revenue_Percentage from Revenue_Value ;
+
+select sum(Revenue) from Sales_data 
+where Order_Status = 'Completed';
