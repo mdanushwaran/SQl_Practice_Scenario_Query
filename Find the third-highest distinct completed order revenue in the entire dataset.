@@ -1,0 +1,19 @@
+-- Find the third-highest distinct completed order revenue in the entire dataset.
+-- Requirements:
+-- - Include completed orders only.
+-- - Rank orders by revenue from highest to lowest.
+-- - Handle ties correctly so each distinct revenue gets one rank.
+-- - Display Order_ID, Revenue, and Revenue_Rank.
+-- - Return only rank 3.
+-- Hint: Use a CTE with DENSE_RANK().
+
+
+Answer Query :
+
+with Distinct_Order as
+(select Order_ID  , Revenue , 
+dense_rank() over( order by Revenue desc) as Revenue_Rank from Sales_data
+where Order_Status = 'Completed')
+
+select Order_ID , Revenue , Revenue_Rank from Distinct_Order
+where Revenue_Rank = 3;
