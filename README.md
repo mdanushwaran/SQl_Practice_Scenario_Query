@@ -8,3 +8,4 @@ To Practice the SQl_Practice_Scenario_Query for this Respository
 5) Find each city's highest-revenue product.
 6) Calculate cumulative completed revenue over time.
 7) Find products whose completed revenue is greater than the average completed revenue per product.
+8) Find each city's top 2 products by completed revenue.
