@@ -1,0 +1,20 @@
+Scenario: Find each city's top 2 products by completed revenue.
+Requirements:
+- Calculate completed revenue for each product within each city.
+- Rank products within each city by revenue, highest first.
+- Return only the top 2 products per city.
+- Display City, Product, Total_Revenue, and Product_Rank.
+Hint: Use a CTE, SUM(), and DENSE_RANK().
+
+Answer Query 
+
+with City_Revenue as(
+select City , Product , sum(Revenue) as Total_Revenue from Sales_data
+where Order_Status = 'Completed' group by City , Product ),
+
+Ranked_product as(
+select City , Product , Total_Revenue , dense_rank() over(partition by City order by Total_Revenue desc) as Product_Rank
+from City_Revenue)
+
+select City , Product , Total_Revenue , Product_Rank from Ranked_product 
+where Product_Rank <= 2;
