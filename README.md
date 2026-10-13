@@ -13,3 +13,4 @@ To Practice the SQl_Practice_Scenario_Query for this Respository
 10)  Find each product's percentage contribution to total completed revenue.
 11)   Find cities where the average completed-order revenue is greater than the overall average completed-order revenue.
 12)   Find the third-highest distinct completed order revenue in the entire dataset.
+13)    Calculate each city's month-over-month completed revenue change.
