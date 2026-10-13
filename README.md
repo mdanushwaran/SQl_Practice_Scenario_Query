@@ -6,3 +6,4 @@ To Practice the SQl_Practice_Scenario_Query for this Respository
 3) Find each product's contribution to its city's completed revenue.
 4) Find each city's percentage of completed orders.
 5) Find each city's highest-revenue product.
+6) Calculate cumulative completed revenue over time.
