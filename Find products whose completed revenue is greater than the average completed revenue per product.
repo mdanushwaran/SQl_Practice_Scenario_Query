@@ -1,0 +1,18 @@
+Scenario: Find products whose completed revenue is greater than the average completed revenue per product.
+Requirements:
+- Calculate total completed revenue for each product.
+- Compare each product's total against the average of those product totals.
+- Display Product and Total_Revenue.
+- Show only products above the average.
+Hint: Use a CTE and a subquery with AVG().
+
+Answer Query 
+
+with Product_Revenue as (
+select Product , sum(Revenue) as Total_Revenue from Sales_data
+where Order_Status = 'Completed'
+group by Product )
+
+select Product , Total_Revenue from Product_Revenue
+where Total_Revenue > ( select avg(Total_Revenue) from Product_Revenue)
+order by Total_Revenue desc;
