@@ -15,3 +15,4 @@ To Practice the SQl_Practice_Scenario_Query for this Respository
 12)   Find the third-highest distinct completed order revenue in the entire dataset.
 13)    Calculate each city's month-over-month completed revenue change.
 14) the top-performing customer segment by completed revenue in each city.
+15)  Find completed orders whose revenue is greater than the average completed-order revenue for their own product.
