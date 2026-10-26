@@ -1,0 +1,22 @@
+Find the top-performing customer segment by completed revenue in each city.
+Requirements:
+- Calculate completed revenue for each City and Customer_Segment.
+- Rank segments within each city by revenue, highest first.
+- Display City, Customer_Segment, Total_Revenue, and Revenue_Rank.
+- Return only the top-ranked segment in each city.
+- Include ties if multiple segments share the highest revenue.
+Hint: Use two CTEs, SUM(), DENSE_RANK(), and PARTITION BY City.
+
+
+Answer 
+
+with Total_Count as
+(select City , Customer_Segment , sum(Revenue) as Total_Revenue 
+from Sales_Data 
+where Order_Status = 'Completed'
+group by City , Customer_Segment) ,
+Ranked_Rank as (
+select City , Customer_Segment , Total_Revenue , dense_rank() over (partition by City order by Total_Revenue desc) as Revenue_Rank 
+from Total_Count)
+select City , Customer_Segment , Total_Revenue , Revenue_Rank from Ranked_Rank
+where Revenue_Rank = 1;
