@@ -1,0 +1,21 @@
+ Find completed orders whose revenue is greater than the average completed-order revenue for their own product.
+Requirements:
+- Display Order_ID, Product, Revenue, and Product_Avg_Revenue.
+- Include completed orders only.
+- Compare each order's revenue with the average revenue of completed orders for the same product.
+- Return only orders above their product's average.
+- Round the displayed average to two decimal places.
+Hint: Use AVG(Revenue) OVER (PARTITION BY Product) in a CTE, then filter in the outer query.
+
+
+Answer
+
+with Product_Revenue as (
+select Order_ID , Product , Revenue , round(avg(Revenue) over(partition by Product),2) as Product_Avg_Revenue 
+from Sales_Data
+where Order_Status = 'Completed'
+order by Order_ID)
+select Order_ID , Product , Revenue , Product_Avg_Revenue 
+from Product_Revenue
+where Revenue > Product_Avg_Revenue
+order by Product , Revenue desc;
